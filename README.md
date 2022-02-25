@@ -52,6 +52,8 @@ We hope to have the following results as part of the final report
 |Evaluation and Comparison of models | April 26th|
 |Final Report | April 26th|
 
+Our detailed timeline can be found [here](https://github.com/AdityaAS/ml_project/blob/main/ML%20timeline.pdf)
+
 ## Proposed Contributions
 
 |Member name | Task |
