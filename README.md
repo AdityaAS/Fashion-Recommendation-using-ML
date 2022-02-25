@@ -28,7 +28,7 @@ We hope to have the following results at the end of the semester with 1. and 2. 
 
 1. **Exploratory data analysis**: Going over the dataset, understanding the most important features for the task, combining existing features, data visualization
 
-2. **Matrix Factorization**: We hope to have our final results for the matrix factorization method for the mid-term report. We will start with standard matrix factorization methods proposed in REF 1, and modify the method according to our use case
+2. **Matrix Factorization**: We hope to have our final results for the matrix factorization method for the mid-term report. We will start with standard matrix factorization methods proposed in [1], and modify the method according to our use case
 
 3. **Content based methods**[3]: Since our dataset contains a lot of information about the products themselves (product group, image, product description) it is fair to assume that using this additional data would help boost the performance obtained via the matrix factorization method. To incorporate content information, we will use classical vision and nlp models such as sift features, bag of words model
 
@@ -68,10 +68,6 @@ All team members will actively participate in discussions via a private slack wo
 ## Proposal Video
 
 Video link: [https://www.youtube.com/watch?v=hyNbVMK_bNY](https://www.youtube.com/watch?v=hyNbVMK_bNY)
-
-
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=hyNbVMK_bNY" title="Group 28 proposal video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 
 ## References
 
