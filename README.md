@@ -52,7 +52,7 @@ We hope to have the following results as part of the final report
 |Evaluation and Comparison of models | April 26th|
 |Final Report | April 26th|
 
-Our detailed timeline can be found [here](https://github.com/AdityaAS/ml_project/blob/main/ML%20timeline.pdf)
+Our detailed timeline can be found [here](https://docs.google.com/spreadsheets/d/1x-xW91rFzp30riCjQ-ZyBcnbJ8fQewvw3XGVG49_Lqw/edit?usp=sharing)
 
 ## Proposed Contributions
 
