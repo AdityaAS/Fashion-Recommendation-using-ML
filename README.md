@@ -68,7 +68,10 @@ All team members will actively participate in discussion via a private slack wor
 
 ## Proposal Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=hyNbVMK_bNY" title="Group 28 proposal video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Video link: [https://www.youtube.com/watch?v=hyNbVMK_bNY](https://www.youtube.com/watch?v=hyNbVMK_bNY)
+
+
+<!-- <iframe width="560" height="315" src="https://www.youtube.com/watch?v=hyNbVMK_bNY" title="Group 28 proposal video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 
 
 ## References
