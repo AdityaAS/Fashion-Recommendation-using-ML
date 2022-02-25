@@ -64,7 +64,7 @@ We hope to have the following results as part of the final report
 | Mihir      | Data cleaning and implementation of method 3 (NLP features) |
 | All        | Evaluation of all methods, debugging, mid-term and end-term reports |
 
-All team members will actively participate in discussion via a private slack workspace and keep each other in the loop
+All team members will actively participate in discussions via a private slack workspace and keep each other in the loop
 
 ## Proposal Video
 
