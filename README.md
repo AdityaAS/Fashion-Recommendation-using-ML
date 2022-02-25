@@ -1,24 +1,24 @@
-# Project Project (Machine Learning, CS7641)
+# Project Proposal (Machine Learning, CS7641)
 #### Team 28: Aditya, Adwait, Saranya, Mihir, Tejas
 
 ________________________
 
 ## Introduction and Background
 
-We will use the ongoing kaggle competition “[H&M Personalized Fashion Recommendations](https://www.kaggle.com/c/h-and-m-personalized-fashion-recommendations/overview)”’s dataset for this project. The topic of the project is recommender systems. The dataset contains purchase history of each customer along with additional metadata about the product (product group, description, image) and about the customer (age, zipcode). The main task on this dataset would be building a recommender system. Recommender systems is a widely studied topic with methods including collaborative methods, content based methods, knowledge based methods etc. We will primarily explore collaborative and content based methods in this project. We will rely on prior work [REF 5, 6, and 7] particularly for how recsys has been approached for fashion recommendations
+We will use the ongoing kaggle competition [H&M Personalized Fashion Recommendations](https://www.kaggle.com/c/h-and-m-personalized-fashion-recommendations/overview)’s dataset for this project. The topic of the project is **recommender systems**. The dataset contains purchase history of each customer along with additional metadata about the product (product group, description, image) and about the customer (age, zipcode). The goal of the project it to build a recommender system to predict with high accuracy, products that the customer may purchase in the future. Recommender systems is a widely studied topic with methods including collaborative methods, content based methods, knowledge based methods etc. We will primarily explore collaborative and content based methods in this project. We will rely on prior work [5, 6, 7] particularly for how RecSys has been approached for fashion recommendations
 
 ## Problem Definition and Motivation
 
-Given the purchase history of customers along with metadata about both the product and the customer, our goal is to predict what products the customer will purchase in the time duration of 7 days right after the training data ends. The problem is a standard timeseries recommendation system problem with additional threads in NLP and CV.
+Given the purchase history of customers along with metadata about both the product and the customer, our goal is to predict what products the customer will purchase in the time duration of 7 days right after the training data ends. The problem is a standard timeseries recommendation system problem with additional threads in NLP and CV (via product descriptions, and images)
 
-Product recommendation is a very important problem in the e-commerce industry. Presenting customers with relevant recommendations not only makes for a good customer experience but also helps with the company’s revenue.
+Product recommendation is a very important problem in the e-commerce industry. Presenting customers with relevant recommendations not only makes for a good customer experience but also helps with the company’s revenue
 
 ## Methods
 
 Since this is not a standard academic dataset and is an ongoing competition, we will be implementing the baseline approaches ourselves. Details of our plan are provided below
 
-1. **Collaborative Filtering**(REF 1): Uses user-product interactions without taking into consideration the content of the product
-2. **Content based methods**(REF 2): Unlike 1, in content based methods we will use product descriptions (text), product images (image) information to improve our recommendations
+1. **Collaborative Filtering**[1]: We will use user-product interactions without taking into consideration the content of the product
+2. **Content based methods**[2]: Unlike 1, in content based methods we will use product descriptions (text), product images (image) information to improve our recommendations
 3. **Content based methods using neural networks**: We will improve upon 2. by using neural network based features instead of classical features
 
 
@@ -30,14 +30,13 @@ We hope to have the following results at the end of the semester with 1. and 2. 
 
 2. **Matrix Factorization**: We hope to have our final results for the matrix factorization method for the mid-term report. We will start with standard matrix factorization methods proposed in REF 1, and modify the method according to our use case
 
-3. **Content based methods**[REF 3]: Since our dataset contains a lot of information about the products themselves (product group, image, product description) it is fair to assume that using this additional data would help boost the performance obtained via the matrix factorization method. To incorporate content information, we will use classical vision and nlp models such as sift features, bag of words model
+3. **Content based methods**[3]: Since our dataset contains a lot of information about the products themselves (product group, image, product description) it is fair to assume that using this additional data would help boost the performance obtained via the matrix factorization method. To incorporate content information, we will use classical vision and nlp models such as sift features, bag of words model
 
-4. **Neural network based methods**[REF 4]: Since neural networks have proven time and again to be powerful feature extractors, in this stage of the project we will rely on pretrained vision and language models to generate features for the product images and descriptions and use these features in our recommendation systems pipeline.
+4. **Neural network based methods**[4]: Since neural networks have proven time and again to be powerful feature extractors, in this stage of the project we will rely on pretrained vision and language models to generate features for the product images and descriptions and use these features in our recommendation systems pipeline.
 
 We hope to have the following results as part of the final report
-- Performance of methods: We believe that Neural network based methods will perform the best whereas Matrix factorization will perform the worst of our chosen methods
-- Ablation study measuring the importance of different features
-- Predict with high accuracy (>75%): What products is a customer more likely to buy in the next 7 days
+1.  Comparative evaluation of the 3 methods: We believe that Neural network based methods will perform the best whereas Matrix factorization will perform the worst of our chosen methods
+2.  Ablation study measuring the importance of different features
 
 ## Proposed Timeline
 
