@@ -1,4 +1,4 @@
-# Midterm Proposal (Machine Learning, CS7641)
+# Midterm Report (Machine Learning, CS7641)
 #### Team 28: Aditya, Adwait, Saranya, Mihir, Tejas
 #### Date: 5th April, 2022
 
