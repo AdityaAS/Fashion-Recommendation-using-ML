@@ -165,6 +165,9 @@ Mean Average Precision(MAP@k) is a performance metric especially suited for reco
 
 In our dataset, for the validation and test sets, the ground truth recommendations are the list of products that each user has already purchased (let’s call this list ‘actual’) and our recommender systems will recommend a list of products (call is ‘predicted’) in the order of relevance.
 
+<img width="399" alt="Screen Shot 2022-04-06 at 12 52 27 AM" src="https://user-images.githubusercontent.com/7334811/161898325-32e970f3-cd40-4f8e-b77c-ed05a17157f8.png">
+
+
 ## Results and Discussion
 
 ## Potential Results and Discussion
