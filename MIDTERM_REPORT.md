@@ -129,6 +129,7 @@ a. This cluster mostly consists of jeans and trousers.
 <img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/53764708/161890246-b59a8e93-11ec-4e54-9c80-869382b3105e.png" \>  
 b. This cluster contains products having ‘stripes’ design. 
 
+<br><br>
 
 <img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/53764708/161890287-8363d7a8-2f1d-4c96-9fc2-1ce6841d3c0f.png" \>
 c. This cluster consists of products with ‘floral’ design.
