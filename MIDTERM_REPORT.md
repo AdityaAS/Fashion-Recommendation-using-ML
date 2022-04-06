@@ -124,7 +124,7 @@ Next, we display the images corresponding to some clusters in order to understan
 
 <img width="800" alt="Cluster A" src="https://user-images.githubusercontent.com/53764708/161890077-44c3c1f6-0512-451a-94c7-10e5920fab51.png">
 a. This cluster mostly consists of jeans and trousers.
-$$ \\ $$
+<br>
 <img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/53764708/161890246-b59a8e93-11ec-4e54-9c80-869382b3105e.png">  
 b. This cluster contains products having ‘stripes’ design. 
 $$ \\ $$
