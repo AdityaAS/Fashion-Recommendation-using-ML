@@ -187,10 +187,10 @@ Below you can find the histograms of our AP@50 scores. Notice that such low valu
 
 <img width="950" alt="Screen Shot 2022-04-06 at 1 24 46 AM" src="https://user-images.githubusercontent.com/7334811/161901691-a6c96d79-1ece-4a86-be29-fb0f08e216f6.png">
 
-#### Histogram of AP@50 scores for all of the customers in the test set
+#### Histogram of AP@12 scores for all of the customers in the test set
 <img width="401" alt="Screen Shot 2022-04-06 at 1 23 12 AM" src="https://user-images.githubusercontent.com/7334811/161901518-1b61a873-4eb2-4745-a016-0e1e334f9ac9.png">
 
-#### Histogram of AP@50 scores by neglecting scores less than 0.01
+#### Histogram of AP@12 scores by neglecting scores less than 0.01
 
 <img width="399" alt="Screen Shot 2022-04-06 at 1 23 50 AM" src="https://user-images.githubusercontent.com/7334811/161901587-fb334278-6228-4952-b457-5b2a015e1216.png">
 
