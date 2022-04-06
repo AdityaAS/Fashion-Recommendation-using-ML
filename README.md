@@ -211,7 +211,7 @@ We calculate the MAP@k metric on the validation and test splits and obtain the f
 | 25 | 0.005021         | 0.0050513  |
 | 50 | 0.0055747        | 0.0053765  |
 
-Below you can find the histograms of our AP@50 scores. Notice that such low values are actually expected for a recommendation system especially for product recommendations. For reference, the top performing model in the kaggle leaderboard right now (which is a mixture of SOTA methods ensembled and trained on the entire dataset of 2 years) is 0.03 [link to the leaderboard](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/leaderboard)
+Below you can find the histograms of our AP@12 scores. Notice that such low values are actually expected for a recommendation system especially for product recommendations. For reference, the top performing model in the kaggle leaderboard right now (which is a mixture of SOTA methods ensembled and trained on the entire dataset of 2 years) is 0.03 [link to the leaderboard](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/leaderboard)
 
 
 #### Histogram of AP@12 scores for all of the customers in the test set
