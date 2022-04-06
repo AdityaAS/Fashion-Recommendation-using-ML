@@ -43,7 +43,7 @@ A couple of things stand out from the above analysis. First off, it’s evident 
 
 The full dataset consists of customer transactions from September 2018 to September 2020 containing a total of 1,371,980 customers, 105,542 products and 31,788,324 transactions.
 
-Due to resource and time constraints, as part of this project we only use the transaction data of only 100k users and limit ourselves to purchases made in the year 2020. The resulting sampled dataset consists of 100,000 customers, 82,320 products, and 2,325,536 transactions.
+Due to resource and time constraints, as part of this project we only use the transaction data of 100k users and limit ourselves to purchases made in the year 2020. The resulting sampled dataset consists of 100,000 customers, 82,320 products, and 2,325,536 transactions.
 
 Since the goal of the project is to determine future purchase patterns of any given customer. We splice the data in the time dimension to create our train, validation and test sets.
 
