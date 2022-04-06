@@ -183,11 +183,18 @@ We calculate the MAP@k metric on the validation and test splits and obtain the f
 | 25 | 0.005021         | 0.0050513  |
 | 50 | 0.0055747        | 0.0053765  |
 
-Below you can find the histograms of our AP@50 scores. Notice that such low values are actually expected for a recommendation system especially for product recommendations. For reference, the top performing model in the kaggle leaderboard right now (which is a mixture of SOTA methods ensembled and trained on the entire dataset of 2 years) is 0.03
+Below you can find the histograms of our AP@50 scores. Notice that such low values are actually expected for a recommendation system especially for product recommendations. For reference, the top performing model in the kaggle leaderboard right now (which is a mixture of SOTA methods ensembled and trained on the entire dataset of 2 years) is 0.03 (Screenshot attached below for your reference)
+
+<img width="950" alt="Screen Shot 2022-04-06 at 1 24 46 AM" src="https://user-images.githubusercontent.com/7334811/161901691-a6c96d79-1ece-4a86-be29-fb0f08e216f6.png">
 
 #### Histogram of AP@50 scores for all of the customers in the test set
+<img width="401" alt="Screen Shot 2022-04-06 at 1 23 12 AM" src="https://user-images.githubusercontent.com/7334811/161901518-1b61a873-4eb2-4745-a016-0e1e334f9ac9.png">
 
 #### Histogram of AP@50 scores by neglecting scores less than 0.01
+
+<img width="399" alt="Screen Shot 2022-04-06 at 1 23 50 AM" src="https://user-images.githubusercontent.com/7334811/161901587-fb334278-6228-4952-b457-5b2a015e1216.png">
+
+### Qualitative Evaluation
 
 ## Potential Results and Discussion
 
