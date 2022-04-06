@@ -140,7 +140,7 @@ From these example clusters, we can see that products having similar design or s
 
 ## Potential Results and Discussion
 
-We hope to hav![Uploading Screen Shot 2022-04-05 at 11.21.29 PM.png…]()
+We hope to have![Uploading Screen Shot 2022-04-05 at 11.21.29 PM.png…]()
 e the following results at the end of the semester with 1. and 2. being ready for the mid-term report
 
 1. **Exploratory data analysis**: Going over the dataset, understanding the most important features for the task, combining existing features, data visualization
