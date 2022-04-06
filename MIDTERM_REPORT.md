@@ -123,13 +123,15 @@ We can use either of these scores to determine the optimal number of clusters. A
 Next, we display the images corresponding to some clusters in order to understand and visualize how the clusters have been formed. Following are some examples of the same:
 
 <img width="800" alt="Cluster A" src="https://user-images.githubusercontent.com/53764708/161890077-44c3c1f6-0512-451a-94c7-10e5920fab51.png">
-a. This cluster mostly consists of jeans and trousers. \
-
+a. This cluster mostly consists of jeans and trousers.
+\
+&nbsp;
 <img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/53764708/161890246-b59a8e93-11ec-4e54-9c80-869382b3105e.png">  
-b. This cluster contains products having ‘stripes’ design.  \
-
+b. This cluster contains products having ‘stripes’ design. 
+\
+&nbsp;
 <img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/53764708/161890287-8363d7a8-2f1d-4c96-9fc2-1ce6841d3c0f.png">
-c. This cluster consists of products with ‘floral’ design. \
+c. This cluster consists of products with ‘floral’ design.
 
 From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought 3 dresses with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. 
 
