@@ -240,8 +240,9 @@ In summary
 4. Implemented two methods to do recommendations a. Content based methods and b. Collaborative Filtering and obtained reasonable performance on Collaborative Filtering but not on content based methods (as explained above, about TF-IDF)
 5. Implemented the relevant evaluation criteria and evaluated our model accordingly
 
+We see a scope for improving our current models by incorporating additional information to measure product-product similarity by taking into account product descriptions and product images
 
-But, we still have scope t
+
 ## Contents from the proposal for instructor's reference
 ### Potential Results and Discussion
 
