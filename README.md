@@ -199,7 +199,7 @@ Where `actual` refers to the list of products that the user has already purchase
 
 Due to the computational requirement of our current method, we were not able to perform cross validation and then pick the best model. We hope to do a principled model selection / ensemble step as part of the final report.
 
-### Quantitative Evaluation
+### Evaluation
 
 We calculate the MAP@k metric on the validation and test splits and obtain the following performance. The table below shows the MAP@k values of our model on the validation and test set for varying k
 
@@ -226,6 +226,22 @@ Notice that for a large chunk of the customers in the test set the AP@12 score i
 
 The graph above is just to illustrate other AP@12 values visualized by removing all the 0 values so that they are more visible in the histogram
 
+### Discussion
+
+Matrix factorization has formed a strong baseline for this recommendation task. We also notice that we obtain good results in image clustering (done via VGG16 features) which is a very good signal that VGG16 has the ability to extract meaningful features for this task. This would be especially relevant as we move on to evaluating neural network based methods for recommendations where we plan to make use of the image features to boost performance of our recommendation system.
+
+As part of this report, we also tried incorporating classical textual features (TF-IDF) of product descriptions but when we used the TF-IDF features as part of content based filtering, we did not observe a good performance. However, we intend to use additional natural language features (such as word embeddings etc.) and build a system which incorporates information encapsulating the product descriptions and product images for the final report.
+
+In summary
+
+1. We performed exhaustive data analysis
+2. Created time spliced splits of the data set taking into account resource constraints
+3. Performed unsupervised analysis of product image features (via VGG16 features and K-means clustering)
+4. Implemented two methods to do recommendations a. Content based methods and b. Collaborative Filtering and obtained reasonable performance on Collaborative Filtering but not on content based methods (as explained above, about TF-IDF)
+5. Implemented the relevant evaluation criteria and evaluated our model accordingly
+
+
+But, we still have scope t
 ## Contents from the proposal for instructor's reference
 ### Potential Results and Discussion
 
