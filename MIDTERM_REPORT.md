@@ -197,58 +197,6 @@ Notice that for a large chunk of the customers in the test set the AP@12 score i
 
 The graph above is just to illustrate other AP@12 values visualized by removing all the 0 values so that they are more visible in the histogram
 
-### Qualitative Evaluation
-
-## Potential Results and Discussion
-
-We hope to have![Uploading Screen Shot 2022-04-05 at 11.21.29 PM.png…]()
-e the following results at the end of the semester with 1. and 2. being ready for the mid-term report
-
-1. **Exploratory data analysis**: Going over the dataset, understanding the most important features for the task, combining existing features, data visualization
-
-2. **Matrix Factorization**: We hope to have our final results for the matrix factorization method for the mid-term report. We will start with standard matrix factorization methods proposed in [1], and modify the method according to our use case
-
-3. **Content based methods**[3]: Since our dataset contains a lot of information about the products themselves (product group, image, product description) it is fair to assume that using this additional data would help boost the performance obtained via the matrix factorization method. To incorporate content information, we will use classical vision and nlp models such as sift features, bag of words model
-
-4. **Neural network based methods**[4]: Since neural networks have proven time and again to be powerful feature extractors, in this stage of the project we will rely on pretrained vision and language models to generate features for the product images and descriptions and use these features in our recommendation systems pipeline.
-
-We hope to have the following results as part of the final report
-1.  Comparative evaluation of the 3 methods: We believe that Neural network based methods will perform the best whereas Matrix factorization will perform the worst of our chosen methods
-2.  Ablation study measuring the importance of different features
-
-## Proposed Timeline
-
-| Milestone | Completion date |
-|-----------|------|
-|Exploratory data analysis, cleaning and visualization | February 27th|
-|Feature Reduction/selection | February 27th|
-|Content based methods | March 6th|
-|Matrix factorization -| March 14th|
-|Coding and Implementation | March 17th|
-|Midterm Report | April 5th|
-|Neural Network model implementation | April 20th|
-|Evaluation and Comparison of models | April 26th|
-|Final Report | April 26th|
-
-Our detailed timeline can be found [here](https://docs.google.com/spreadsheets/d/1x-xW91rFzp30riCjQ-ZyBcnbJ8fQewvw3XGVG49_Lqw/edit?usp=sharing)
-
-## Proposed Contributions
-
-|Member name | Task |
-|------------|------|
-| Aditya     | Feature selection and Neural network based methods (method 3) |
-| Saranya    | EDA and Matrix Factorization (method 1) |
-| Tejas      | Data visualization and Content based methods (method 2) |
-| Adwait     | Literature review and Pretrained NLP models for neural network |
-| Mihir      | Data cleaning and implementation of method 3 (NLP features) |
-| All        | Evaluation of all methods, debugging, mid-term and end-term reports |
-
-All team members will actively participate in discussions via a private slack workspace and keep each other in the loop
-
-## Proposal Video
-
-Video link: [https://www.youtube.com/watch?v=hyNbVMK_bNY](https://www.youtube.com/watch?v=hyNbVMK_bNY)
-
 ## References
 
 1. Gábor Takács et al (2008). Matrix factorization and neighbor based algorithms for the Netflix prize problem. In: Proceedings of the 2008 ACM Conference on Recommender Systems, Lausanne, Switzerland, October 23 - 25, 267-274.
