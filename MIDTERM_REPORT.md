@@ -190,9 +190,12 @@ Below you can find the histograms of our AP@50 scores. Notice that such low valu
 #### Histogram of AP@12 scores for all of the customers in the test set
 <img width="401" alt="Screen Shot 2022-04-06 at 1 23 12 AM" src="https://user-images.githubusercontent.com/7334811/161901518-1b61a873-4eb2-4745-a016-0e1e334f9ac9.png">
 
+Notice that for a large chunk of the customers in the test set the AP@12 score is very very low (It is infact, 0 for a lot of them). This is due to 2 reasons a. The nature of the dataset itself - it is a highly chaotic real world dataset and b. The nature of the problem - product recommendation is an extremely difficult problem. Companies (such as Amazon etc.) use thousands of feature (including click-through logs) to be able to make product recommendations and even they suffer with low MAP@k scores
 #### Histogram of AP@12 scores by neglecting scores less than 0.01
 
 <img width="399" alt="Screen Shot 2022-04-06 at 1 23 50 AM" src="https://user-images.githubusercontent.com/7334811/161901587-fb334278-6228-4952-b457-5b2a015e1216.png">
+
+The graph above is just to illustrate other AP@12 values visualized by removing all the 0 values so that they are more visible in the histogram
 
 ### Qualitative Evaluation
 
