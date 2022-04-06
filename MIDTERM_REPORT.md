@@ -160,15 +160,34 @@ From these example clusters, we can see that products having similar design or s
 ## Evaluation
 We use the Mean Average Precision @k (i.e. MAP@k) metric to evaluate  the performance of our recommender system
 
-### Mean Average Precision @k (MAP@k)
-Mean Average Precision(MAP@k) is a performance metric especially suited for recommender systems to evaluate the recommendations as well as the order of the recommendations. It is a slight modification of the MAP metric with the salient difference being that MAP@k takes into account the order of predictions i.e., it is not sufficient to recommend 10 items where the first 5 are irrelevant and the last 5 are highly relevant. Our recommender system should make sure that relevant products are predicted with high confidence. We provide the pseudo code for MAP@k below. In accordance with the [competition's guidelines](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/overview/evaluation), we use the MAP@12 metric as our main evaluation criterion
-
-In our dataset, for the validation and test sets, the ground truth recommendations are the list of products that each user has already purchased (let’s call this list ‘actual’) and our recommender systems will recommend a list of products (call is ‘predicted’) in the order of relevance.
+### Mean Average Precision @ k (MAP@k)
+Mean Average Precision(MAP@k) is a performance metric especially suited for recommender systems to evaluate the recommendations as well as the order of the recommendations. It's essentially the mean of Average Precision @ k (or AP@k) aggregated over all the users in the dataset. The pseudo code for AP@k is provided below
 
 <img width="399" alt="Screen Shot 2022-04-06 at 12 52 27 AM" src="https://user-images.githubusercontent.com/7334811/161898325-32e970f3-cd40-4f8e-b77c-ed05a17157f8.png">
 
+Where `actual` refers to the list of products that the user has already purchased (ground truth) and `predicted` (predictions) refers to the list of products recommended by our system, `in order of relevance` (i.e. order of the items in predicted matters)
+
+ It is a slight modification of the AP metric with the salient difference being that AP@k takes into account the order of predictions i.e., it is not sufficient to recommend 10 items where the first 5 are irrelevant and the last 5 are highly relevant. Our recommender system should make sure that relevant products are predicted with high confidence. We provide the pseudo code for MAP@k below. In accordance with the [competition's guidelines](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/overview/evaluation), we use the MAP@12 metric as our main evaluation criterion
 
 ## Results and Discussion
+
+Due to the computational requirement of our current method, we were not able to perform cross validation and then pick the best model. We hope to do a principled model selection / ensemble step as part of the final report.
+### Quantitative Evaluation
+We calculate the MAP@k metric on the validation and test splits and obtain the following performance. The table below shows the MAP@k values of our model on the validation and test set for varying k
+
+| k  | Validation MAP@k | Test MAP@k |
+|----|------------------|------------|
+| 10 | 0.004830         | 0.004850   |
+| 12 | 0.004851         | 0.004856   |
+| 20 | 0.004963         | 0.00495680 |
+| 25 | 0.005021         | 0.0050513  |
+| 50 | 0.0055747        | 0.0053765  |
+
+Below you can find the histograms of our AP@50 scores. Notice that such low values are actually expected for a recommendation system especially for product recommendations. For reference, the top performing model in the kaggle leaderboard right now (which is a mixture of SOTA methods ensembled and trained on the entire dataset of 2 years) is 0.03
+
+#### Histogram of AP@50 scores for all of the customers in the test set
+
+#### Histogram of AP@50 scores by neglecting scores less than 0.01
 
 ## Potential Results and Discussion
 
