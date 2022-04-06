@@ -18,30 +18,125 @@ Product recommendation is a very important problem in the e-commerce industry. P
 
 As mentioned, we retrieved our dataset from the kaggle competition “H&M Personalized Fashion Recommendations”, upon which we performed some preliminary data exploration and preprocessing. Below are some of the analyses we derived from our exploration. 
 
-<img width="972" alt="line_graph_full" src="https://user-images.githubusercontent.com/28340555/161873630-306f3a21-be27-4992-b1f5-b84c8cf536e4.png">
+<img width="800" alt="line_graph_full" src="https://user-images.githubusercontent.com/28340555/161873630-306f3a21-be27-4992-b1f5-b84c8cf536e4.png">
 
 The dataset consists of 3 csv files; articles, customers and transactions. The transactions file contains the list of purchases made by customers over a period of 2 years, with details such as the price of the articles, the customer unique id, the article unique id, and the date of purchase. To understand the general trend of these purchases, the above line graph was created, which plots the number of purchases made over the months, and their respective confidence intervals.
 As can be seen, the data retrieved starts from September 2018 and continues on till December 2020. There seems to be an overall pattern in increasing purchases during the first half of the year, which peaks in June, and then follows a sharper decline during the second half. Between each year, the month to month trend seems to be almost identical, as depicted by the 2019 and 2020 graphs. 
 
 Due to the huge amount of data, and computational limitations, we decided to sample a portion of the dataset for our purpose. We extracted all the transactions made during the year 2020, which we further split into training, test and validation datasets. Our testing and validation datasets were randomly sampled from the last 2 months of data, so that our model will try to predict what a customer is likely to purchase based on their previous history of purchases in the 7 months prior. To understand the trends in this sampled data, and the split between the training and test data, the line graph below was plotted. From this visualization it can be inferred that the purchases seem to stay within an approximate range, the only deviation from this occurring in June, in line with our analyses of the complete dataset.
 
-<img width="976" alt="line_graph_train_test" src="https://user-images.githubusercontent.com/28340555/161873693-8c67d665-f53a-491c-84a4-283529c0cffb.png">
+<img width="800" alt="line_graph_train_test" src="https://user-images.githubusercontent.com/28340555/161873693-8c67d665-f53a-491c-84a4-283529c0cffb.png">
 
 To aggregate the data month wise and reinforce our findings from the first two plots, we created a bar graph that accumulates the number of purchases made over the sampled months of January to September, 2020. The resulting graph verifies the trend we observed earlier, with there being a general increase in purchases from May to June, at which point there is a sharper decline for the latter half of the year. This decline mostly occurs in the month of July, with purchases in the following months of August and September being similar.
 
-<img width="938" alt="bar_graph" src="https://user-images.githubusercontent.com/28340555/161873770-7598a7ee-e889-49bf-b7eb-2ec915d90e49.png">
+<img width="800" alt="bar_graph" src="https://user-images.githubusercontent.com/28340555/161873770-7598a7ee-e889-49bf-b7eb-2ec915d90e49.png">
 
 While the above exploration was with respect to the time series data gained from the transactions file, we also performed some exploration on the customer and article files, to gain clarity on their respective features and purchases trends. Below is a scatter plot, which takes in features such as the Customer age, the product types purchased, and the prices of these products. For easier understanding of the visualization, one week's worth of data and only the top 5 product types were extracted to obtain the below plot.
 
-<img width="925" alt="scatterplot" src="https://user-images.githubusercontent.com/28340555/161873840-e7ad7d8c-a4db-48d0-a38e-d39b4968334b.png">
+<img width="800" alt="scatterplot" src="https://user-images.githubusercontent.com/28340555/161873840-e7ad7d8c-a4db-48d0-a38e-d39b4968334b.png">
 
 A couple of things stand out from the above analysis. First off, it’s evident that the most popular products are categorized as Upper Body garments, with accessories being next. Most of the accessories purchases lie on the lower end of the price spectrum, implying that popular accessories are usually not the high-end ones. The prices stick within a range 0 to 0.2, with very few outliers beyond this, and similarly a bulk of the customers lie within the age range of 20-80 years, indicating that most of our recommendations would take this age range into account. The plot above helps to understand the general customer’s purchasing budget, and which articles they would prefer for which prices.
 
+## Methods
 
+### Collaborative Filtering (Method 1)
+
+Collaborative Filtering makes predictions based on user similarity. Its underlying principle is that if user A and user B have similar tastes, then articles bought by user A will probably be bought by user B too and vice-versa.
+We used the train splits for user data from above and joined them with the transactions completed for the time range considered.
+
+#### Matrix Factorization
+We form a matrix A that consists of users and the articles bought by those users. This matrix is sparse as the number of articles purchased by each user is a small subset of all the articles bought by all the users. We use SVD and use the top k (=10) sigma values to rebuild matrix A. This resultant matrix gives us the probability that user X will be interested in buying an article based on the articles bought by other users that have the same taste as user X. 
+
+### Content-Based Filtering (Method 2)
+Content-based methods use article metadata previously bought by the users and recommend articles similar to those. Its underlying principle is that if user A bought article X then there is a higher probability that user X will be interested in buying other articles similar to article X. For example, if a user previously bought a striped shirt, the algorithm will recommend other striped shirts for the user to buy. We used all the product data and joined them with the transactions completed for the time range considered.
+
+#### TF-IDF Vectorization with Cosine Similarity
+In our first approach, we combined all the article metadata into a single descriptive text and ran Term Frequency - Inverse Document Frequency (TF-IDF) Vectorization on this single descriptive text. After doing that, we calculated the cosine similarity between the articles based on the vectorization to group the articles into similar products. This approach was giving us poor results and hence we decided to group articles in combination with other advanced techniques.
+
+#### Clustering Product images using K-Means
+In our second approach, we used K-means clustering to group images of products into different categories. Here, categories conceptually refer to the product types viz. shirts, pants, shoes, and so on. As we are working with image data, this also takes into consideration the patterns or designs on the products. For instance, products with flowers or stripes may be clustered together. 
+
+##### VGG-16 Architecture
+We used a modified version of the VGG-16 architecture to extract features from images.
+
+<img width="800" alt="VGG-16 Architecture" src="https://user-images.githubusercontent.com/53764708/161888807-fa636a34-689c-481a-a034-a6f81e750993.png">
+
+The architecture of VGG16 is depicted above. VGG-16 is a CNN model proposed in the paper “Very Deep Convolutional Networks for Large-Scale Image Recognition” by K. Simonyan and A. Zisserman. VGG-16 achieved a top-5 test accuracy of 92.7% in ImageNet [8].
+
+Our task here is not to perform image recognition but to extract features from images. Because of this, we only take the feature layer, average pooling layer, and one fully-connected layer that outputs a 4096-dimensional vector.  Our neural network architecture is as follows:
+
+```
+FeatureExtractor(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+    (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (5): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (6): ReLU(inplace=True)
+    (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): ReLU(inplace=True)
+    (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (10): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace=True)
+    (12): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (13): ReLU(inplace=True)
+    (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (15): ReLU(inplace=True)
+    (16): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (17): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (18): ReLU(inplace=True)
+    (19): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (20): ReLU(inplace=True)
+    (21): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (22): ReLU(inplace=True)
+    (23): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (24): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (25): ReLU(inplace=True)
+    (26): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (27): ReLU(inplace=True)
+    (28): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (29): ReLU(inplace=True)
+    (30): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (pooling): AdaptiveAvgPool2d(output_size=(7, 7))
+  (flatten): Flatten(start_dim=1, end_dim=-1)
+  (fc): Linear(in_features=25088, out_features=4096, bias=True)
+)
+```
+When we pass an image from this neural network, the image is flattened i.e. converted into a one-dimensional vector. This one-dimensional vector is passed through the neural network and a 4096-dimensional vector encoding the features of the input image is returned as an output. We need to transform the images so that they are of the same size and match the input dimensions required by the model. 
+
+<img width="600" alt="Feature shape" src="https://user-images.githubusercontent.com/53764708/161889660-3ab3d47d-dd64-484e-944d-5ed1c4107ea0.png">
+
+Here, we see the shape and the actual features for an example image. 
+Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering. 
+
+<img width="400" alt="Silhoutte" src="https://user-images.githubusercontent.com/53764708/161889800-b55d3d61-db69-4cad-bc12-0c5296c8c607.png">
+
+We also use the Elbow method to determine the optimum number of clusters. 
+
+<img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/53764708/161889908-da34e4fc-519b-4c0e-80d4-359da5674970.png">
+
+We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 34. So the optimal number of clusters is 34.
+
+Next, we display the images corresponding to some clusters in order to understand and visualize how the clusters have been formed. Following are some examples of the same:
+
+<img width="800" alt="Cluster A" src="https://user-images.githubusercontent.com/53764708/161890077-44c3c1f6-0512-451a-94c7-10e5920fab51.png">
+a. This cluster mostly consists of jeans and trousers. 
+
+<img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/53764708/161890246-b59a8e93-11ec-4e54-9c80-869382b3105e.png">
+b. This cluster contains products having ‘stripes’ design.
+
+<img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/53764708/161890287-8363d7a8-2f1d-4c96-9fc2-1ce6841d3c0f.png">
+c. This cluster consists of products with ‘floral’ design. 
+
+From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought 3 dresses with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. 
 
 ## Potential Results and Discussion
 
-We hope to have the following results at the end of the semester with 1. and 2. being ready for the mid-term report
+We hope to hav![Uploading Screen Shot 2022-04-05 at 11.21.29 PM.png…]()
+e the following results at the end of the semester with 1. and 2. being ready for the mid-term report
 
 1. **Exploratory data analysis**: Going over the dataset, understanding the most important features for the task, combining existing features, data visualization
 
@@ -97,3 +192,4 @@ Video link: [https://www.youtube.com/watch?v=hyNbVMK_bNY](https://www.youtube.co
 5. Naumov, Maxim & Mudigere, Dheevatsa & Shi, Hao-Jun & Huang, Jianyu & Sundaraman, Narayanan & Park, Jongsoo & Wang, Xiaodong & Gupta, Udit & Wu, Carole-Jean & Azzolini, Alisson & Dzhulgakov, Dmytro & Mallevich, Andrey & Cherniavskii, Ilia & Lu, Yinghai & Krishnamoorthi, Raghuraman & Yu, Ansha & Kondratenko, Volodymyr & Pereira, Stephanie & Chen, Xianjie & Smelyanskiy, Misha. (2019). Deep Learning Recommendation Model for Personalization and Recommendation Systems.
 6. Yang Hu, Xi Yi, and Larry S. Davis. 2015. Collaborative Fashion Recommendation: A Functional Tensor Factorization Approach. In Proceedings of the 23rd ACM international conference on Multimedia (MM '15). Association for Computing Machinery, New York, NY, USA, 129–138. DOI:https://doi.org/10.1145/2733373.2806239
 7. S. Liu, J. Feng, Z. Song, T. Zhang, H. Lu, C. Xu, and S. Yan. “Hi, magic closet, tell me what to wear!”. In ACM Multimedia, 2012.
+8. Simonyan, Karen, and Andrew Zisserman. "Very deep convolutional networks for large-scale image recognition." arXiv preprint arXiv:1409.1556 (2014).
