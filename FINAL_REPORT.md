@@ -71,6 +71,94 @@ Content-based methods use article metadata previously bought by the users and re
 #### TF-IDF Vectorization with Cosine Similarity
 In our first approach, we combined all the article metadata into a single descriptive text and ran Term Frequency - Inverse Document Frequency (TF-IDF) Vectorization on this single descriptive text. After doing that, we calculated the cosine similarity between the articles based on the vectorization to group the articles into similar products. This approach was giving us poor results and hence we decided to group articles in combination with other advanced techniques.
 
+#### Clustering Product images using K-Means
+
+In our second approach, we used K-means clustering to group images of products into different categories. Here, categories conceptually refer to the product types viz. shirts, pants, shoes, and so on. As we are working with image data, this also takes into consideration the patterns or designs on the products. For instance, products with flowers or stripes may be clustered together.
+
+##### VGG-16 Architecture
+
+We used a modified version of the VGG-16 architecture to extract features from images.
+
+<img width="800" alt="VGG-16 Architecture" src="https://user-images.githubusercontent.com/53764708/161888807-fa636a34-689c-481a-a034-a6f81e750993.png">
+
+The architecture of VGG16 is depicted above. VGG-16 is a CNN model proposed in the paper “Very Deep Convolutional Networks for Large-Scale Image Recognition” by K. Simonyan and A. Zisserman. VGG-16 achieved a top-5 test accuracy of 92.7% in ImageNet [8].
+
+Our task here is not to perform image recognition but to extract features from images. Because of this, we only take the feature layer, average pooling layer, and one fully-connected layer that outputs a 4096-dimensional vector.  Our neural network architecture is as follows:
+
+```
+FeatureExtractor(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+    (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (5): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (6): ReLU(inplace=True)
+    (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): ReLU(inplace=True)
+    (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (10): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace=True)
+    (12): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (13): ReLU(inplace=True)
+    (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (15): ReLU(inplace=True)
+    (16): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (17): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (18): ReLU(inplace=True)
+    (19): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (20): ReLU(inplace=True)
+    (21): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (22): ReLU(inplace=True)
+    (23): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (24): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (25): ReLU(inplace=True)
+    (26): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (27): ReLU(inplace=True)
+    (28): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (29): ReLU(inplace=True)
+    (30): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (pooling): AdaptiveAvgPool2d(output_size=(7, 7))
+  (flatten): Flatten(start_dim=1, end_dim=-1)
+  (fc): Linear(in_features=25088, out_features=4096, bias=True)
+)
+```
+
+When we pass an image from this neural network, the image is flattened i.e. converted into a one-dimensional vector. This one-dimensional vector is passed through the neural network and a 4096-dimensional vector encoding the features of the input image is returned as an output. We need to transform the images so that they are of the same size and match the input dimensions required by the model.
+
+<img width="600" alt="Feature shape" src="https://user-images.githubusercontent.com/53764708/161889660-3ab3d47d-dd64-484e-944d-5ed1c4107ea0.png">
+
+Here, we see the shape and the actual features for an example image.
+Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering.
+
+<img width="400" alt="Silhoutte" src="https://user-images.githubusercontent.com/53764708/161889800-b55d3d61-db69-4cad-bc12-0c5296c8c607.png">
+
+We also use the Elbow method to determine the optimum number of clusters.
+
+<img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/53764708/161889908-da34e4fc-519b-4c0e-80d4-359da5674970.png">
+
+We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 34. So the optimal number of clusters is 34.
+
+Next, we display the images corresponding to some clusters in order to understand and visualize how the clusters have been formed. Following are some examples of the same:
+
+<img width="800" alt="Cluster A" src="https://user-images.githubusercontent.com/32770122/165630098-80982528-0953-4f28-8d6f-708b52273e0c.png">
+a. This cluster mostly consists of jeans and trousers.
+
+<br><br>
+
+<img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/32770122/165630155-655a0548-b993-4088-8c62-7e2fc82fe5dc.png">
+b. This cluster contains products having ‘stripes’ design.
+
+<br><br>
+
+<img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/32770122/165630186-e70efd4f-d826-44f4-abe1-213b562c1770.png">
+c. This cluster consists of products with ‘floral’ design.
+
+<br><br>
+
+From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought 3 dresses with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them.
 
 
 ### Neural Network based methods
