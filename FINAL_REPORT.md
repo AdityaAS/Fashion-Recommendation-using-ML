@@ -139,7 +139,7 @@ We also use the Elbow method to determine the optimum number of clusters.
 
 <img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/32770122/165634740-14833245-88d8-4e3f-82f8-09f12bc061e5.png">
 
-We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 34. So the optimal number of clusters is 34.
+We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 33. So the optimal number of clusters is 33.
 
 Next, we display the images corresponding to some clusters in order to understand and visualize how the clusters have been formed. Following are some examples of the same:
 
