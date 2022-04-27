@@ -156,9 +156,16 @@ b. This cluster contains products having ‘stripes’ design.
 <img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/32770122/165630186-e70efd4f-d826-44f4-abe1-213b562c1770.png">
 c. This cluster consists of products with ‘floral’ design.
 
-<br>
+<br><br>
 
-From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought 3 dresses with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them.
+From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought a dress with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. Another use case could be that if a new product is added to the catalogue, we can find the products similar to that using the aforementioned method, and recommend the new product to customers who purchased similar products earlier.
+
+Again, given an input test image, we get the image features using VGG-16. Then, we predict the cluster to which this item belongs. Next, we pull out all the products belonging to that cluster and calculate the euclidean distance between the test image and all the other images in the cluster. We sort this and exytract the lowest 5 values, which are the 5 products most similar to the input product. These products can then be recommended to the customer.
+
+An example is shown below:
+
+
+![prediction2](https://user-images.githubusercontent.com/32770122/165636516-e12687f6-ff7c-4259-a055-e1c389eab49b.png)
 
 
 ### Neural Network based methods
