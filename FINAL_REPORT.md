@@ -156,7 +156,7 @@ b. This cluster contains products having ‘stripes’ design.
 <img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/32770122/165630186-e70efd4f-d826-44f4-abe1-213b562c1770.png">
 c. This cluster consists of products with ‘floral’ design.
 
-<br><br>
+<br>
 
 From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought 3 dresses with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them.
 
