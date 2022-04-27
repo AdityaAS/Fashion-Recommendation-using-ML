@@ -87,6 +87,7 @@ Humans reason about the world by engaging multiple modalities of vision, languag
 
 Transformers[9] are neural networks constructed by using only attention and linear layers which allows them to parallely process large volumes of textual data. This has led them to outperform many existing recurrent models such as RNNs and LSTMs in Natural Language Processing. BERT [10] is one such model based on the Transformer architecture. BERT is pretrained on a very large corpus of web data and performs very well on most NLP tasks. However, it contains over 110 million parameters and is slower to run. We instead use DistilBERT [11], a distilled version of BERT that is much faster and has almost equivalent performance. Similar to our approach with VGG16, we use the outputs from the last layer of DistilBERT  as text features. We use these features in combination with VGG16 features to improve our clothing recommendation. This recommendation is based on both visual and textual similarity.
 
+Following the same steps as before we use a. Cosine similarity b. Euclidean distance to measure product similarity. We use the same strategy as above to recommend items to each user (i.e. based only on their last purchase in train data).
 
 ## Evaluation
 We use the Mean Average Precision @k (i.e. MAP@k) metric to evaluate  the performance of our recommender system
