@@ -128,16 +128,16 @@ FeatureExtractor(
 
 When we pass an image from this neural network, the image is flattened i.e. converted into a one-dimensional vector. This one-dimensional vector is passed through the neural network and a 4096-dimensional vector encoding the features of the input image is returned as an output. We need to transform the images so that they are of the same size and match the input dimensions required by the model.
 
-<img width="600" alt="Feature shape" src="https://user-images.githubusercontent.com/53764708/161889660-3ab3d47d-dd64-484e-944d-5ed1c4107ea0.png">
+<img width="457" alt="Feature shape" src="https://user-images.githubusercontent.com/32770122/165634605-c4333e83-088f-48db-b685-2beee298e13d.PNG">
 
 Here, we see the shape and the actual features for an example image.
 Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering.
 
-<img width="400" alt="Silhoutte" src="https://user-images.githubusercontent.com/53764708/161889800-b55d3d61-db69-4cad-bc12-0c5296c8c607.png">
+<img width="281" alt="Silhoutte" src="https://user-images.githubusercontent.com/32770122/165634679-5549ec9b-59fa-423e-9df9-5afcc71fcb56.PNG">
 
 We also use the Elbow method to determine the optimum number of clusters.
 
-<img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/53764708/161889908-da34e4fc-519b-4c0e-80d4-359da5674970.png">
+<img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/32770122/165634740-14833245-88d8-4e3f-82f8-09f12bc061e5.png">
 
 We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 34. So the optimal number of clusters is 34.
 
