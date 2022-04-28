@@ -254,8 +254,7 @@ On the test dataset, **we are able to obtain an mAP@12 of 0.01, a huge improveme
 
 Additionally, we plot the mAP@k for k in [1, 5, 10, 12, 15] and present the graph below
 
-![image_results](https://github.com/AdityaAS/Fashion-Recommendation-using-ML/blob/6bdb95db06fb113108ba68bef63505041f8d8413/image.png)
-TODO: Add graph here
+![image](https://user-images.githubusercontent.com/7334811/165780315-f0813333-4c0b-41ff-b261-981ce0800347.png)
 
 ##### Using product image and product description features
 
@@ -263,7 +262,7 @@ Our dataset also contains highly informative and concise product descriptions fo
 
 Using text features along with image features we are able to obtain a mAP@12 performance of 0.016. This is a marginal improvement over the recommendation system using only image features (mAP@12=0.010) and a huge improvement over our mid-term result of mAP@12=0.005. Clearly using content information such as image features and textual features goes a long way! The graph below shows the mAP@k values for various k values comparing both image based and image+text based recommendation system
 
-![image_text_results](https://github.com/AdityaAS/Fashion-Recommendation-using-ML/blob/6bdb95db06fb113108ba68bef63505041f8d8413/image_text.png)
+![image_text](https://user-images.githubusercontent.com/7334811/165780379-d10e8ea9-95aa-45af-b830-db85776a6bc1.png)
 
 ## Results and Discussion
 
