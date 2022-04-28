@@ -75,7 +75,7 @@ In our first approach, we combined all the article metadata into a single descri
 
 In our second approach, we used K-means clustering to group images of products into different categories. Here, categories conceptually refer to the product types viz. shirts, pants, shoes, and so on. As we are working with image data, this also takes into consideration the patterns or designs on the products. For instance, products with flowers or stripes may be clustered together.
 
-##### VGG-16 Architecture
+**VGG-16 Architecture**
 
 We used a modified version of the VGG-16 architecture to extract features from images.
 
