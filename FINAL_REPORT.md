@@ -57,21 +57,21 @@ Visualizations done as part of exploring the dataset have already been described
 
 ## Methods
 
-### Collaborative Filtering (Method 1)
+### Method 1: Collaborative Filtering
 
 Collaborative Filtering makes predictions based on user similarity. Its underlying principle is that if user A and user B have similar tastes, then articles bought by user A will probably be bought by user B too and vice-versa.
 We used the train splits for user data from above and joined them with the transactions completed for the time range considered.
 
-#### Matrix Factorization
+#### a. Matrix Factorization
 We form a matrix A that consists of users and the articles bought by those users. This matrix is sparse as the number of articles purchased by each user is a small subset of all the articles bought by all the users. We use SVD and use the top k (=10) sigma values to rebuild matrix A. This resultant matrix gives us the probability that user X will be interested in buying an article based on the articles bought by other users that have the same taste as user X.
 
-### Content-Based Filtering (Method 2)
+### Method 2: Content-Based Filtering
 Content-based methods use article metadata previously bought by the users and recommend articles similar to those. Its underlying principle is that if user A bought article X then there is a higher probability that user X will be interested in buying other articles similar to article X. For example, if a user previously bought a striped shirt, the algorithm will recommend other striped shirts for the user to buy. We used all the product data and joined them with the transactions completed for the time range considered.
 
-#### TF-IDF Vectorization with Cosine Similarity
+#### a. TF-IDF Vectorization with Cosine Similarity
 In our first approach, we combined all the article metadata into a single descriptive text and ran Term Frequency - Inverse Document Frequency (TF-IDF) Vectorization on this single descriptive text. After doing that, we calculated the cosine similarity between the articles based on the vectorization to group the articles into similar products. This approach was giving us poor results and hence we decided to group articles in combination with other advanced techniques.
 
-#### Clustering Product images using K-Means
+#### b. Clustering Product images using K-Means
 
 In our second approach, we used K-means clustering to group images of products into different categories. Here, categories conceptually refer to the product types viz. shirts, pants, shoes, and so on. As we are working with image data, this also takes into consideration the patterns or designs on the products. For instance, products with flowers or stripes may be clustered together.
 
@@ -132,19 +132,20 @@ When we pass an image from this neural network, the image is flattened i.e. conv
 
 Here, we see the shape and the actual features for an example image.
 
-Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering. We also use the Elbow method to determine the optimum number of clusters. We can use either of these scores to determine the optimal number of clusters. 
+Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering. We also use the Elbow method to determine the optimum number of clusters. We can use either of these scores to determine the optimal number of clusters.
 
 These clusters can then be used to recommend products to the customers based on their previous purchases. For example, if a person bought a dress with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. Another use case could be that if a new product is added to the catalog, we can find the products similar to that using the aforementioned method, and recommend the new product to customers who purchased similar products earlier.
 
 
-### Neural Network based methods
+### Method 3: Neural Network based methods
 Neural networks are a machine learning paradigm that work well in supervised settings. Recently, deep neural networks, i.e neural networks that have a large number of weight layers, have shown impressive performance on a wide variety of domains such as computer vision and natural language processing.
 
+#### a. Incorporating product image features
 As we saw previously, we were able to use features from VGG16 to cluster visually similar clothing via KMeans. VGG16 is a deep convolutional neural network that has been trained on the ILSVRC dataset to classify images. We use the output from the last layer of VGG16 as image features for clustering. We also consider another popular architecture: Residual Networks or ResNets. ResNets also use convolutional layers to learn image features but additionally employ skip connections to pass the unchanged input to the latter layers of the network. This allows us to build a deeper network without running into exploding and vanishing gradients during training. We started working with ResNet18 but found out that the time required to calculate features per image was slow. In the interest of time we stick with VGG16, but will consider ResNet18 in our future work.
 
 We pass the images from our dataset through ResNet to generate image features. We calculate the pairwise distances between these features and suggest similar clothing based on the nearest neighbors. We expect that visually similar images will have similar features and therefore be good recommendations for users based on their past purchases.
 
-#### Incorporating Text Features
+#### b. Incorporating product description (text) features
 Humans reason about the world by engaging multiple modalities of vision, language and senses. Based on this intuition, we expect our model performance to improve by using multimodal features. The H&M Recommendations dataset includes textual descriptions along with the images for each clothing item. As we observed some success while using image features from neural networks, we expect that adding in natural language features would help us in suggesting better recommendations.
 
 <img width="800" alt="BERT Pre-training and fine-tuning" src="https://user-images.githubusercontent.com/53764708/165547730-6ba78cb4-cbf5-4360-976c-3abe44d2baed.png">
@@ -164,53 +165,9 @@ Mean Average Precision(MAP@k) is a performance metric especially suited for reco
 Where `actual` refers to the list of products that the user has already purchased (ground truth) and `predicted` (predictions) refers to the list of products recommended by our system, `in order of relevance` (i.e. order of the items in predicted matters)
 
  It is a slight modification of the AP metric with the salient difference being that AP@k takes into account the order of predictions i.e., it is not sufficient to recommend 10 items where the first 5 are irrelevant and the last 5 are highly relevant. Our recommender system should make sure that relevant products are predicted with high confidence. We provide the pseudo code for MAP@k below. In accordance with the [competition's guidelines](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/overview/evaluation), we use the MAP@12 metric as our main evaluation criterion
- 
- 
- Final Results and Discussion (Partial)
- 
- **K-means clustering similarity based recommendation system**
- 
- Following are the Silhouette and Davies-Bouldin scores for the clusters formed: 
- 
-<img width="281" alt="Silhoutte" src="https://user-images.githubusercontent.com/32770122/165634679-5549ec9b-59fa-423e-9df9-5afcc71fcb56.PNG">
 
-We also use the Elbow method to determine the optimum number of clusters.
+### Mid-term results
 
-<img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/32770122/165634740-14833245-88d8-4e3f-82f8-09f12bc061e5.png">
-
-We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 33. So the optimal number of clusters is 33.
-
-Next, we display the images corresponding to some clusters in order to understand and visualize how the clusters have been formed. Following are some examples of the same:
-
-<img width="800" alt="Cluster A" src="https://user-images.githubusercontent.com/32770122/165630098-80982528-0953-4f28-8d6f-708b52273e0c.png">
-a. This cluster mostly consists of jeans and trousers.
-
-<br><br>
-
-<img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/32770122/165630155-655a0548-b993-4088-8c62-7e2fc82fe5dc.png">
-b. This cluster contains products having ‘stripes’ design.
-
-<br><br>
-
-<img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/32770122/165630186-e70efd4f-d826-44f4-abe1-213b562c1770.png">
-c. This cluster consists of products with ‘floral’ design.
-
-<br><br>
-
-From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought a dress with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. Another use case could be that if a new product is added to the catalog, we can find the products similar to that using the aforementioned method, and recommend the new product to customers who purchased similar products earlier.
-
-Again, given an input test image, we get the image features using VGG-16. Then, we predict the cluster to which this item belongs. Next, we pull out all the products belonging to that cluster and calculate the euclidean distance between the test image and all the other images in the cluster. We sort this and extract the lowest 5 values, which are the 5 products most similar to the input product. These products can then be recommended to the customer.
-
-An example is shown below:
-
-
-![prediction2](https://user-images.githubusercontent.com/32770122/165636516-e12687f6-ff7c-4259-a055-e1c389eab49b.png)
-
-
-## Results and Discussion
-
-Due to the computational requirement of our current method, we were not able to perform cross validation and then pick the best model. We hope to do a principled model selection / ensemble step as part of the final report.
-### Quantitative Evaluation
 We calculate the MAP@k metric on the validation and test splits and obtain the following performance. The table below shows the MAP@k values of our model on the validation and test set for varying k
 
 | k  | Validation MAP@k | Test MAP@k |
@@ -226,15 +183,93 @@ Below you can find the histograms of our AP@50 scores. Notice that such low valu
 <img width="950" alt="Screen Shot 2022-04-06 at 1 24 46 AM" src="https://user-images.githubusercontent.com/7334811/161901691-a6c96d79-1ece-4a86-be29-fb0f08e216f6.png">
 
 #### Histogram of AP@12 scores for all of the customers in the test set
+
 <img width="401" alt="Screen Shot 2022-04-06 at 1 23 12 AM" src="https://user-images.githubusercontent.com/7334811/161901518-1b61a873-4eb2-4745-a016-0e1e334f9ac9.png">
 
 Notice that for a large chunk of the customers in the test set the AP@12 score is very very low (It is infact, 0 for a lot of them). This is due to 2 reasons a. The nature of the dataset itself - it is a highly chaotic real world dataset and b. The nature of the problem - product recommendation is an extremely difficult problem. Companies (such as Amazon etc.) use thousands of feature (including click-through logs) to be able to make product recommendations and even they suffer with low MAP@k scores
+
 #### Histogram of AP@12 scores by neglecting scores less than 0.01
 
 <img width="399" alt="Screen Shot 2022-04-06 at 1 23 50 AM" src="https://user-images.githubusercontent.com/7334811/161901587-fb334278-6228-4952-b457-5b2a015e1216.png">
 
 The graph above is just to illustrate other AP@12 values visualized by removing all the 0 values so that they are more visible in the histogram
 
+### Final Results and Discussion
+
+#### a. K-means clustering similarity based recommendation system
+
+Following are the Silhouette and Davies-Bouldin scores for the clusters formed:
+
+<img width="281" alt="Silhoutte" src="https://user-images.githubusercontent.com/32770122/165634679-5549ec9b-59fa-423e-9df9-5afcc71fcb56.PNG">
+
+We also use the Elbow method to determine the optimum number of clusters.
+
+<img width="600" alt="Elbow Method" src="https://user-images.githubusercontent.com/32770122/165634740-14833245-88d8-4e3f-82f8-09f12bc061e5.png">
+
+We can use either of these scores to determine the optimal number of clusters. As an example, we use the Elbow method. As it can be seen in the above graph, we have an elbow at 33. So the optimal number of clusters is 33.
+
+Next, we display the images corresponding to some clusters in order to understand and visualize how the clusters have been formed. Following are some examples of the same:
+
+<img width="800" alt="Cluster A" src="https://user-images.githubusercontent.com/32770122/165630098-80982528-0953-4f28-8d6f-708b52273e0c.png">
+i. This cluster mostly consists of jeans and trousers.
+
+<br><br>
+
+<img width="800" alt="Cluster B" src="https://user-images.githubusercontent.com/32770122/165630155-655a0548-b993-4088-8c62-7e2fc82fe5dc.png">
+ii. This cluster contains products having ‘stripes’ design.
+
+<br><br>
+
+<img width="800" alt="Cluster C" src="https://user-images.githubusercontent.com/32770122/165630186-e70efd4f-d826-44f4-abe1-213b562c1770.png">
+iii. This cluster consists of products with ‘floral’ design.
+
+<br><br>
+
+From these example clusters, we can see that products having similar design or style are clustered together. This can be used to recommend products to the customers based on their previous purchases. For example, if a person bought a dress with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. Another use case could be that if a new product is added to the catalog, we can find the products similar to that using the aforementioned method, and recommend the new product to customers who purchased similar products earlier.
+
+Again, given an input test image, we get the image features using VGG-16. Then, we predict the cluster to which this item belongs. Next, we pull out all the products belonging to that cluster and calculate the euclidean distance between the test image and all the other images in the cluster. We sort this and extract the lowest 5 values, which are the 5 products most similar to the input product. These products can then be recommended to the customer.
+
+An example is shown below:
+
+
+![prediction2](https://user-images.githubusercontent.com/32770122/165636516-e12687f6-ff7c-4259-a055-e1c389eab49b.png)
+
+#### b. Content based recommendation
+
+##### Incorporating product image features
+
+Along with the transaction history of each customer over an extended period of time, our dataset also contains images of the products purchased. We use these images i.e. their corresponding features to build a content based recommendation system
+
+Specifically, to gather features from the product images we use a ImageNet pre-trained VGG16 network. For each image, the image feature consists of a high dimensional (4096) vector that represents features of the image encoded in a high dimensional space. Once we have the features for all the images, we compute pairwise distances between them in the high dimensional space to identify similar products. We use a. Euclidean distance and b. Cosine similarity as two ways to measure similarity. We pick the last item bought by each customer in the training data and get recommendations only based on this product. Our strong assumption is that the most recent transaction of the customer is the only thing that influences her/his next purchase. This is a strong assumption and may not always hold but this is the heuristic that we found to be best in terms of holdout set performance.
+
+On the test dataset, **we are able to obtain an mAP@12 of 0.01, a huge improvement from our mid-term result of 0.005**
+
+Additionally, we plot the mAP@k for k in [1, 5, 10, 12, 15] and present the graph below
+
+![image_results](https://github.com/AdityaAS/Fashion-Recommendation-using-ML/blob/6bdb95db06fb113108ba68bef63505041f8d8413/image.png)
+TODO: Add graph here
+
+##### Using product image and product description features
+
+Our dataset also contains highly informative and concise product descriptions for each product along with the image information. In this section, we use a combination of the image features (described above) and textual features (obtained from product descriptions). To generate usable text features from the product descriptions we use a pre-trained DistillBERT model.
+
+Using text features along with image features we are able to obtain a mAP@12 performance of 0.016. This is a marginal improvement over the recommendation system using only image features (mAP@12=0.010) and a huge improvement over our mid-term result of mAP@12=0.005. Clearly using content information such as image features and textual features goes a long way! The graph below shows the mAP@k values for various k values comparing both image based and image+text based recommendation system
+
+
+![image_text_results](https://github.com/AdityaAS/Fashion-Recommendation-using-ML/blob/6bdb95db06fb113108ba68bef63505041f8d8413/image_text.png)
+## Results and Discussion
+
+For our final submission, due to the computational requirement of our current method, we were not able to perform cross validation and then pick the best model. We hope to do a principled model selection / ensemble step as part of the final report.
+
+One of the key takeaways from our final report is the performance boost obtained by using content-based information i.e. product images and product descriptions as part of our recommendation system. We obtain an order of magnitude performance improvement by incorporating rich image and text features using large pre-trained neural network methods.
+
+The k-means similarity based recommendation system demonstrates that even though we use a pre-trained VGG16 network, it is able to tranfer to the product images in our use case. The features are very expressive and capture the similarities between products very efficiently. The qualitative results presented above clearly indicate the expressive power of the VGG16 features.
+
+Based on our experience with k-means clusters, we used the same VGG-16 image features and used product-product similarity using cosine similarity to build a recommendation system and as shown in the previous section, we were able to surpass our mid-term performance by an order of magnitude. Adding the text features additionally, marginally improved the performance.
+
+In conclusion, over the course of the semester, as part of this project, we as a team have experimented with a variety of recommendation systems both supervised and unsupervised. More specifically, collaborative filtering based methods and content based methods (with classical text features) for the mid-term report. For the later half of the project, we focused solely on using the neural network based features (VGG16 for images, DistillBERT for text) and built 3 recommendation systems within neural network methods a. K-means cluster similarity based recommendation system, b. Product image similarity based recommendation system and c. Product image and text similarity based recommendation system, with the best performance being achieved by the product image and text similarity based recommendation system. We have also explored qualitative and quantitative evaluation across our methods and both the evaluations show promise in the ability of our fashion recommendation system to recomment the right items to the user at any given time.
+
+As next steps, we will consider submitting our models to the Kaggle competition so that we can benchmark our performance on the hidden test set.
 
 ## References
 
