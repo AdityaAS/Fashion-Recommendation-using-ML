@@ -131,8 +131,47 @@ When we pass an image from this neural network, the image is flattened i.e. conv
 <img width="457" alt="Feature shape" src="https://user-images.githubusercontent.com/32770122/165634605-c4333e83-088f-48db-b685-2beee298e13d.PNG">
 
 Here, we see the shape and the actual features for an example image.
-Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering.
 
+Next, we run the K-means clustering algorithm with the image features generated in the previous step as input. We create multiple clustering models with clusters ranging from 15 to 50 i.e. min_num_clusters = 15 and max_num_clusters = 50. For each num_clusters k, we calculate the Silhouette score and Davies-Bouldin score in order to evaluate the goodness of clustering. We also use the Elbow method to determine the optimum number of clusters. We can use either of these scores to determine the optimal number of clusters. 
+
+These clusters can then be used to recommend products to the customers based on their previous purchases. For example, if a person bought a dress with floral patterns in the last month, we can recommend the floral dresses (same cluster) that are most similar to the ones they purchased earlier (intra-cluster distance) to them. Another use case could be that if a new product is added to the catalog, we can find the products similar to that using the aforementioned method, and recommend the new product to customers who purchased similar products earlier.
+
+
+### Neural Network based methods
+Neural networks are a machine learning paradigm that work well in supervised settings. Recently, deep neural networks, i.e neural networks that have a large number of weight layers, have shown impressive performance on a wide variety of domains such as computer vision and natural language processing.
+
+As we saw previously, we were able to use features from VGG16 to cluster visually similar clothing via KMeans. VGG16 is a deep convolutional neural network that has been trained on the ILSVRC dataset to classify images. We use the output from the last layer of VGG16 as image features for clustering. We also consider another popular architecture: Residual Networks or ResNets. ResNets also use convolutional layers to learn image features but additionally employ skip connections to pass the unchanged input to the latter layers of the network. This allows us to build a deeper network without running into exploding and vanishing gradients during training. We started working with ResNet18 but found out that the time required to calculate features per image was slow. In the interest of time we stick with VGG16, but will consider ResNet18 in our future work.
+
+We pass the images from our dataset through ResNet to generate image features. We calculate the pairwise distances between these features and suggest similar clothing based on the nearest neighbors. We expect that visually similar images will have similar features and therefore be good recommendations for users based on their past purchases.
+
+#### Incorporating Text Features
+Humans reason about the world by engaging multiple modalities of vision, language and senses. Based on this intuition, we expect our model performance to improve by using multimodal features. The H&M Recommendations dataset includes textual descriptions along with the images for each clothing item. As we observed some success while using image features from neural networks, we expect that adding in natural language features would help us in suggesting better recommendations.
+
+<img width="800" alt="BERT Pre-training and fine-tuning" src="https://user-images.githubusercontent.com/53764708/165547730-6ba78cb4-cbf5-4360-976c-3abe44d2baed.png">
+
+Transformers[9] are neural networks constructed by using only attention and linear layers which allows them to parallely process large volumes of textual data. This has led them to outperform many existing recurrent models such as RNNs and LSTMs in Natural Language Processing. BERT [10] is one such model based on the Transformer architecture. BERT is pretrained on a very large corpus of web data and performs very well on most NLP tasks. However, it contains over 110 million parameters and is slower to run. We instead use DistilBERT [11], a distilled version of BERT that is much faster and has almost equivalent performance. Similar to our approach with VGG16, we use the outputs from the last layer of DistilBERT  as text features. We use these features in combination with VGG16 features to improve our clothing recommendation. This recommendation is based on both visual and textual similarity.
+
+Following the same steps as before we use a. Cosine similarity b. Euclidean distance to measure product similarity. We use the same strategy as above to recommend items to each user (i.e. based only on their last purchase in train data).
+
+## Evaluation
+We use the Mean Average Precision @k (i.e. MAP@k) metric to evaluate  the performance of our recommender system
+
+### Mean Average Precision @ k (MAP@k)
+Mean Average Precision(MAP@k) is a performance metric especially suited for recommender systems to evaluate the recommendations as well as the order of the recommendations. It's essentially the mean of Average Precision @ k (or AP@k) aggregated over all the users in the dataset. The pseudo code for AP@k is provided below
+
+<img width="399" alt="Screen Shot 2022-04-06 at 12 52 27 AM" src="https://user-images.githubusercontent.com/7334811/161898325-32e970f3-cd40-4f8e-b77c-ed05a17157f8.png">
+
+Where `actual` refers to the list of products that the user has already purchased (ground truth) and `predicted` (predictions) refers to the list of products recommended by our system, `in order of relevance` (i.e. order of the items in predicted matters)
+
+ It is a slight modification of the AP metric with the salient difference being that AP@k takes into account the order of predictions i.e., it is not sufficient to recommend 10 items where the first 5 are irrelevant and the last 5 are highly relevant. Our recommender system should make sure that relevant products are predicted with high confidence. We provide the pseudo code for MAP@k below. In accordance with the [competition's guidelines](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/overview/evaluation), we use the MAP@12 metric as our main evaluation criterion
+ 
+ 
+ Final Results and Discussion (Partial)
+ 
+ **K-means clustering similarity based recommendation system**
+ 
+ Following are the Silhouette and Davies-Bouldin scores for the clusters formed: 
+ 
 <img width="281" alt="Silhoutte" src="https://user-images.githubusercontent.com/32770122/165634679-5549ec9b-59fa-423e-9df9-5afcc71fcb56.PNG">
 
 We also use the Elbow method to determine the optimum number of clusters.
@@ -167,34 +206,6 @@ An example is shown below:
 
 ![prediction2](https://user-images.githubusercontent.com/32770122/165636516-e12687f6-ff7c-4259-a055-e1c389eab49b.png)
 
-
-### Neural Network based methods
-Neural networks are a machine learning paradigm that work well in supervised settings. Recently, deep neural networks, i.e neural networks that have a large number of weight layers, have shown impressive performance on a wide variety of domains such as computer vision and natural language processing.
-
-As we saw previously, we were able to use features from VGG16 to cluster visually similar clothing via KMeans. VGG16 is a deep convolutional neural network that has been trained on the ILSVRC dataset to classify images. We use the output from the last layer of VGG16 as image features for clustering. We also consider another popular architecture: Residual Networks or ResNets. ResNets also use convolutional layers to learn image features but additionally employ skip connections to pass the unchanged input to the latter layers of the network. This allows us to build a deeper network without running into exploding and vanishing gradients during training. We started working with ResNet18 but found out that the time required to calculate features per image was slow. In the interest of time we stick with VGG16, but will consider ResNet18 in our future work.
-
-We pass the images from our dataset through ResNet to generate image features. We calculate the pairwise distances between these features and suggest similar clothing based on the nearest neighbors. We expect that visually similar images will have similar features and therefore be good recommendations for users based on their past purchases.
-
-#### Incorporating Text Features
-Humans reason about the world by engaging multiple modalities of vision, language and senses. Based on this intuition, we expect our model performance to improve by using multimodal features. The H&M Recommendations dataset includes textual descriptions along with the images for each clothing item. As we observed some success while using image features from neural networks, we expect that adding in natural language features would help us in suggesting better recommendations.
-
-<img width="800" alt="BERT Pre-training and fine-tuning" src="https://user-images.githubusercontent.com/53764708/165547730-6ba78cb4-cbf5-4360-976c-3abe44d2baed.png">
-
-Transformers[9] are neural networks constructed by using only attention and linear layers which allows them to parallely process large volumes of textual data. This has led them to outperform many existing recurrent models such as RNNs and LSTMs in Natural Language Processing. BERT [10] is one such model based on the Transformer architecture. BERT is pretrained on a very large corpus of web data and performs very well on most NLP tasks. However, it contains over 110 million parameters and is slower to run. We instead use DistilBERT [11], a distilled version of BERT that is much faster and has almost equivalent performance. Similar to our approach with VGG16, we use the outputs from the last layer of DistilBERT  as text features. We use these features in combination with VGG16 features to improve our clothing recommendation. This recommendation is based on both visual and textual similarity.
-
-Following the same steps as before we use a. Cosine similarity b. Euclidean distance to measure product similarity. We use the same strategy as above to recommend items to each user (i.e. based only on their last purchase in train data).
-
-## Evaluation
-We use the Mean Average Precision @k (i.e. MAP@k) metric to evaluate  the performance of our recommender system
-
-### Mean Average Precision @ k (MAP@k)
-Mean Average Precision(MAP@k) is a performance metric especially suited for recommender systems to evaluate the recommendations as well as the order of the recommendations. It's essentially the mean of Average Precision @ k (or AP@k) aggregated over all the users in the dataset. The pseudo code for AP@k is provided below
-
-<img width="399" alt="Screen Shot 2022-04-06 at 12 52 27 AM" src="https://user-images.githubusercontent.com/7334811/161898325-32e970f3-cd40-4f8e-b77c-ed05a17157f8.png">
-
-Where `actual` refers to the list of products that the user has already purchased (ground truth) and `predicted` (predictions) refers to the list of products recommended by our system, `in order of relevance` (i.e. order of the items in predicted matters)
-
- It is a slight modification of the AP metric with the salient difference being that AP@k takes into account the order of predictions i.e., it is not sufficient to recommend 10 items where the first 5 are irrelevant and the last 5 are highly relevant. Our recommender system should make sure that relevant products are predicted with high confidence. We provide the pseudo code for MAP@k below. In accordance with the [competition's guidelines](https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/overview/evaluation), we use the MAP@12 metric as our main evaluation criterion
 
 ## Results and Discussion
 
