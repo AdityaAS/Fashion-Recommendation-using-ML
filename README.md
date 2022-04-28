@@ -238,9 +238,13 @@ From these example clusters, we can see that products having similar design or s
 
 Again, given an input test image, we get the image features using VGG-16. Then, we predict the cluster to which this item belongs. Next, we pull out all the products belonging to that cluster and calculate the euclidean distance between the test image and all the other images in the cluster. We sort this and extract the lowest 5 values, which are the 5 products most similar to the input product. These products can then be recommended to the customer.
 
-An example is shown below:
+A few examples are shown below:
 
 ![prediction2](https://user-images.githubusercontent.com/32770122/165636516-e12687f6-ff7c-4259-a055-e1c389eab49b.png)
+
+<img width="688" alt="Screen Shot 2022-04-28 at 12 19 53 PM" src="https://user-images.githubusercontent.com/7334811/165798928-21b22cbb-4b2e-4de7-8cda-f5cc1a1932ab.png">
+
+<img width="681" alt="Screen Shot 2022-04-28 at 12 20 02 PM" src="https://user-images.githubusercontent.com/7334811/165798978-1dd6b597-882d-404c-bfee-2bbd6e32cf14.png">
 
 #### b. Content based recommendation
 
